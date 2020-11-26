@@ -355,7 +355,6 @@ router.delete('/delete_recibo', [
 // Operaciones para disp_energ_ren
 router.put('/put_disp', [
 
-    body('numero_disp').not().isEmpty().isNumeric(),
     body('id_domicilio').not().isEmpty().isNumeric(),
     body('energia_generada').not().isEmpty().isNumeric(),
     body('tipo_renovable').not().isEmpty().isString()

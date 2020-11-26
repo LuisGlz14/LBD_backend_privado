@@ -111,7 +111,7 @@ module.exports = {
 
     createDomicilio: (connection, body, callback) => {
         const query = 
-        `INSERT INTO DOMICILIO (cp, numero, calle, curp) values (${body.cp}, ${body.numero}, "${body.calle}", "${body.curp}");`;
+        `CALL addDomicilio (${body.cp}, ${body.numero}, "${body.calle}", "${body.curp}");`;
         connection.query(query, body, (err, results) => {
             if (err) {
                 callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
@@ -166,9 +166,14 @@ module.exports = {
 
     createPlanta: (connection, body, callback) => {
         const query = 
-        `INSERT INTO PLANTA_ELECTRICA 
-        (tipo_renovable, recurso_alim, tipo_planta, cant_energ_gen, emisiones_generadas, id_domicilio)
-        values ("${body.tipo_renovable}", "${body.recurso_alim}", "${body.tipo_planta}", ${body.cant_energ_gen}, ${body.emisiones_generadas}, ${body.id_domicilio});`;
+        `CALL addPlanta(
+            "${body.tipo_renovable}",
+            "${body.recurso_alim}",
+            "${body.tipo_planta}",
+            ${body.cant_energ_gen},
+            ${body.emisiones_generadas},
+            ${body.id_domicilio}
+        )`;
         connection.query(query, body, (err, results) => {
             if (err) {
                 callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
@@ -262,7 +267,7 @@ module.exports = {
 
     createDispositivo: (connection, body, callback) => {
         const query = 
-        `INSERT INTO DISPOSITIVO_ENERGIA_RENOVABLE SET ?`;
+        `CALL addDispositivo(${body.id_domicilio}, ${body.energia_generada}, "${body.tipo_renovable}")`;
         connection.query(query, body, (err, results) => {
             if (err) {
                 callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
