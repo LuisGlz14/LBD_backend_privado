@@ -380,4 +380,34 @@ module.exports = {
         });
     },
 
+    getCurpsDomicilio: (connection, body, callback) => {
+        const query = 
+        `SET @output = "";
+        CALL createCurpsDomicilio(${body.id_domicilio}, @output);
+        SELECT @output`;
+        connection.query(query, (err, results) => {
+            if (err) {
+                callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
+                return;
+            }
+
+            callback({ array: results[2], id: null, success: true });
+        });
+    },
+
+    getCpPlanta: (connection, body, callback) => {
+        const query = 
+        `SET @output = "";
+        CALL createCpPlanta(${body.id_planta}, @output);
+        SELECT @output`;
+        connection.query(query, (err, results) => {
+            if (err) {
+                callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
+                return;
+            }
+
+            callback({ array: results[2], id: null, success: true });
+        });
+    },
+
 }
