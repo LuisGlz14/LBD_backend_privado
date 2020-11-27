@@ -533,4 +533,69 @@ router.post('/get_cp_planta', [
     }));
 });
 
+router.get('/get_numero_alimenta', [], (req, res) => {
+    user.getNumeroAlimenta(connection, (data => {
+        res.json(data);
+    }));
+});
+
+router.post('/get_rec_fecha', [
+
+    body('id_domicilio').not().isEmpty().isNumeric(),
+    body('consumo').not().isEmpty().isNumeric()
+
+], (req, res) => {
+
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        res.json({ success: false, err: JSON.stringify(errors) })
+        return
+    }
+
+    const cuerpo = req.body;
+    user.getRecFecha(connection, cuerpo, (data => {
+        res.json(data);
+    }));
+});
+
+router.post('/get_persona_dueno', [
+
+    body('curp').not().isEmpty().isString()
+
+], (req, res) => {
+
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        res.json({ success: false, err: JSON.stringify(errors) })
+        return
+    }
+
+    const cuerpo = req.body;
+    user.getPersonaDueño(connection, cuerpo, (data => {
+        res.json(data);
+    }));
+});
+
+router.post('/get_disp_mayor', [
+
+    body('id_domicilio').not().isEmpty().isNumeric(),
+    body('generada').not().isEmpty().isNumeric()
+
+], (req, res) => {
+
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        res.json({ success: false, err: JSON.stringify(errors) })
+        return
+    }
+
+    const cuerpo = req.body;
+    user.getDispMayor(connection, cuerpo, (data => {
+        res.json(data);
+    }));
+});
+
 module.exports = router;

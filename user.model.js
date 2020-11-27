@@ -410,4 +410,61 @@ module.exports = {
         });
     },
 
+    getNumeroAlimenta: (connection, callback) => {
+        const query = `SELECT * FROM NUMERO_ALIMENTA;`;
+        connection.query(query, (err, results) => {
+            if (err) {
+                callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
+                return;
+            }
+
+            callback({ array: results, id: null, success: true });
+        });
+    },
+
+    getRecFecha: (connection, body, callback) => {
+        const query = 
+        `SET @output = "";
+        CALL createRecFecha(${body.id_domicilio}, ${body.consumo}, @output);
+        SELECT @output`;
+        connection.query(query, (err, results) => {
+            if (err) {
+                callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
+                return;
+            }
+
+            callback({ array: results[2], id: null, success: true });
+        });
+    },
+
+    getPersonaDueño: (connection, body, callback) => {
+        const query = 
+        `SET @output = "";
+        CALL createPersonaDueño("${body.curp}", @output);
+        SELECT @output`;
+        connection.query(query, (err, results) => {
+            if (err) {
+                callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
+                return;
+            }
+
+            callback({ array: results[2], id: null, success: true });
+        });
+    },
+
+    getDispMayor: (connection, body, callback) => {
+        const query = 
+        `SET @output = "";
+        CALL createDispMayor(${body.id_domicilio}, ${body.generada}, @output);
+        SELECT @output`;
+        connection.query(query, (err, results) => {
+            if (err) {
+                callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
+                return;
+            }
+
+            callback({ array: results[2], id: null, success: true });
+        });
+    },
+
 }
